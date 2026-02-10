@@ -1,0 +1,33 @@
+target log source is a product 
+eg: product-windows
+
+logsource:
+    product:windows
+    category:network_connection
+
+
+logsource:
+  product:windows
+  category:processcreation
+      detection
+
+
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        image: 'cmd.exe'
+        commandline|contains: 'shutdown /s'
+
+in sigma (-) means or statement
+ if some one need to access a system they would do soo:
+access your system 
+goes in browser
+goes to gmail/email
+opening note pad 
+shuting down the machine
+
+
+condition : selection1 and selection2 
+condition :all of slection

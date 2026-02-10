@@ -1,0 +1,27 @@
+In cybersecurity, Nmap (Network Mapper) is used for network discovery, security auditing, and penetration testing. It's a free, open-source tool that can run on many operating systems. 
+How Nmap is used 
+Network discovery: Find IP addresses, operating systems, and services on a network
+Security auditing: Identify vulnerabilities and security loopholes
+Penetration testing: Discover security issues and vulnerabilities in a system
+Network troubleshooting: Diagnose network issues and connectivity problems
+Network inventory: Manage network assets and service upgrade schedules
+Host monitoring: Monitor the uptime of hosts and services
+How Nmap works
+Nmap sends packets to target hosts and analyzes the responses to determine if ports are open, closed, or filtered. It can scan multiple hosts simultaneously. 
+Nmap use cases
+Nmap is used by network administrators, security professionals, and red and blue teams. 
+Nmap risks
+While Nmap can help protect your network, it can also be used to violate the law.
+
+proftpd 1.3.5 vulnerability
+proftpd 1.3.5 exploit
+VAPT
+
+
+
+
+
+
+
+https://youtu.be/4hfO8NZgbc4?si=9sB17NtbJJkfId7L----->reconoissansce 
+https://youtu.be/dUuFnmUqU0I?si=junhGdBpjYp5dl-S

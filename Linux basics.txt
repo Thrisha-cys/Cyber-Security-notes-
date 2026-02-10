@@ -1,0 +1,170 @@
+Linux :
+
+Founder of Linux - Linus Torvalds
+
+Linux is an open-source OS based on UNIX
+
+Core part : kernel(Manages CPU, Memory, and devices)
+
+Examples: Ubuntu, Kali Linux, Fedora, Red Hat, Debian, etc
+
+
+Unix --->  UNIX is an old, powerful, and stable operating system that was first developed in the 1970s at AT&T Bell Labs.
+
+It became the foundation for many modern operating systems, including Linux, macOS, and others.
+
+Used in big servers (IBM, HP)
+
+UNIX examples:
+
+Solaris (by Sun Microsystems)
+
+AIX (by IBM)
+
+HP-UX (by Hewlett-Packard)
+
+macOS (yes! macOS is UNIX certified)
+
+
+UNIX = Original system
+Linux = Free and modern version inspired by UNIX
+
+
+Feature	       Linux	           Windows
+Cost	       Free/Open Source	   Paid
+File System    Case-sensitive	   Not case-sensitive
+Commands       CLI-based	   GUI-based
+Security       Very high	   Moderate
+
+-------------------------------------------------------------------------------------------
+
+Start with Commands
+
+Basic Directory Structure
+
+Every Linux system starts from / (root directory):
+
+bin > Basic binaries (ls,cat, cp)
+etc > configuration files
+home > user files (like c:\Users)
+root > root users home
+var  >logs, cache
+tmp > temporary files
+usr > user-installed programs
+
+File/Directory Navigation:
+
+pwd > print current directory
+ls > list files
+ls -la > show hidden files
+cs /home > go to /home
+cd .. > go up one directory
+cd ~ go to home directory
+
+File Operations:
+
+touch file.txt > create empty files
+cp file1 file2 > copy file
+mv file1 newname > rename/move
+rm file.txt > remove file
+mkdir test > create folder
+rmdir text > remove empty folder
+rm -r test > remove folder and also content 
+
+Viewing Files:
+
+cat file.txt >show file content 
+less file.txt > scroll through file
+head -n 5 file.txt show first 5 lines
+tail -n 10 file.txt >show last 10 lines
+
+User & Permission Management:
+
+> User info:
+
+whoami > show current user
+id > show user ID info
+sudo su > switch to root user
+
+> Permissions:
+
+Each file has : -rwxr-xr-- (owner,group, others)
+
+r-read, w-write, x-execute
+
+> Change permissions
+
+chmod 755 file.sh
+chmod u+x file.sh >add executed permissions to user
+
+Process management
+
+ps > list running processes
+ps aux > detailed process list
+top > show system usage in real time
+kill 1234 > kill processwith PID 1234
+
+Networking commands
+
+ifconfig > show network interfaces(or ip a )
+ping google.com > checks internet
+netstat -tuln > show open ports
+curl <url> fetch data from URL
+wget <url> > download file
+
+Package management:
+
+For Debian/Ubuntu/Kali (APT)
+
+sudo apt update
+sudo apt upgrade
+sudo apt install nmap
+sudo apt remove nmap
+
+File searching & Text filters
+
+find / -name file.txt >search files
+grep "text" file.txt > search for text
+grep -r "password" /etc > recursive search
+
+Shell Scripting Basics
+
+create a file:
+
+nano hello.sh >  to nano shell save ctrl o , enter ctrl x
+
+Add:
+
+echo "Hello, Thrisha!"
+
+Run: 
+
+chmod +x hello.sh
+./hello.sh
+
+interview expected questions
+
+What’s the difference between apt update and apt upgrade?
+
+apt update - refreshes package list
+apt upgrade - install new versions.
+
+How to check disk usage?
+
+df -h > disk usage
+du -sh > folder sizes
+
+How to check system info?
+
+uname -a
+lsb_release -a
+
+What are runlevels?
+System states (e.g., 0 = halt, 3 = multi-user, 5 = GUI).
+
+
+
+
+
+
+ 

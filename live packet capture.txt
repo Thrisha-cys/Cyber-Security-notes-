@@ -1,0 +1,18 @@
+live packet capture
+analyze data from other tools-->tcp dump,tshark
+export data in diff format
+detailed packet analysis
+
+
+
+A GUI front-end for the Metasploit Framework.
+
+Designed to make network attacks easier to understand and manage.
+
+Developed by Raphael Mudge.
+
+Great for team-based penetration testing (real-time collaboration).
+
+sudo service postgresql start
+
+192.168.211.0/24

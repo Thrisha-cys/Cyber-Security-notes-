@@ -1,0 +1,204 @@
+logsource:
+    product: windows
+    category: network_connection
+
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection1:
+        image: chrome.exe
+        commandline: http://gmail.com
+
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection1:
+        image: notepad.exe
+        commandline: "echo <name>"
+
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection1:
+        image: 'cmd.exe'
+        commandline: 'shutdown /s'
+    selection2:
+        image: 'powershell.exe'
+        commandline: 'Stop-Computer'
+condition: selection1 or selection2
+
+
+
+
+
+
+
+logsource:
+    product:windows
+    category:file_event
+selection1:
+    images|endswith: "onedrive.exe"
+    targetfilename|endswith: ".pdf"
+    targetfilename|endswith: "c:\"
+
+logsource:
+     product:windows
+     category:process_creation
+    detection:
+    selection1:
+        image|endswith: 'C:\Windows\System32\schtasks.exe'
+    
+    selection2:
+        image: 'C:\Windows\System32\schtasks.exe'
+        commandline|contains: '/create'
+
+    selection3:
+        image: 'C:\Windows\System32\schtasks.exe'
+        commandline|contains: '/tn "Intel"'
+
+    selection4:
+        image: 'C:\Windows\System32\Wscript.exe'
+ 
+    selection5:
+        commandline|contains: 'Intel58d2a83f778d5.36783181.vbs'
+    
+    selection6:
+        commandline|contains:
+            - '/sc minute'
+            - '/mo 25'
+    condition: selection1 and selection2 and selection3 and selection4 and selection5 and selection6
+
+
+
+detection:
+    selection:
+        image: 'C:\Windows\System32\schtasks.exe'
+        commandline|containsall:
+            - '/create'
+            - '/tn "Intel"'
+            - 'C:\Windows\System32\Wscript.exe'
+            - 'Intel58d2a83f778d5.36783181.vbs'
+            - '/sc minute'
+            - '/mo 25'
+    condition: selection
+
+
+logsource:
+    category: process_creation
+    product: windows
+
+detection:
+    selection:
+        image: 'C:\Windows\System32\schtasks.exe'
+        commandline|containsall:
+            - '/create'
+            - '/tn "ZSUUvsCJNF"'
+            - 'C:\Windows\System32\Wscript.exe'
+            - '58d2a83f77788.86541308.vbs'
+            - '/sc minute'
+            - '/mo 25'
+    condition: selection
+
+
+logsource:
+    category: registry_event
+    product: windows
+
+   detection:
+    selection:
+        target_object|regularexpression: CtM*
+                                'Foxconn.lnk'
+        details|containsall:
+            - 'explorer.exe'
+            - 'Intel'
+    condition: selection
+      
+detection:
+   selection1:
+       image|endswith: schtask.exe
+       commandline|containsall:
+              - /create
+              - /tn
+              - Intel
+              - WSscript.exe
+        registry_add|endswith:
+              - Foxconn.lnk
+        condition:selection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+logsource:
+    product: windows
+    category: process_creation
+selection1:
+    Image: "Forest64.exe"
+    CommandLine|contains: "uTYNkfKxHiZrx3KJ"
+selection2:
+    processID: 4698
+    commandline|contains: "Windows TeamCity Settings User Interface"
+condition: selection1 or selection2
+
+
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection1:
+        Image: "wsmpovhost.exe"
+        CommandLine|contains: "DsRole.dll"
+    selection2:
+        ParentImage: "wsmpovhost.exe"
+        Image: "wksprt.exe"
+    selection3:
+        Image|endswith: "DsRole.dll"
+        ParentImage|endswith: "wsmpovhost.exe"
+condition: selection1 or selection2 or selection3
+
+
+
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection1:
+        Image: "clip.exe"
+        CommandLine|contains: "Version.dll"
+    selection2:
+        ParentImage: "clip.exe"
+        Image: "iexpress.exe"
+condition: selection1 or selection2
+
+
+
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: 'temp.exe'
+    condition: selection
+
+
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: 'inetmgr.exe'
+    condition: selection
+
+

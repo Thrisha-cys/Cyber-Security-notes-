@@ -1,0 +1,225 @@
+nmap
+ nmap --help
+nmap -sL ipaddress/portno. eg 24
+nmap -sn ipaddress-255 it shows how my network or host are alive while we ping
+
+map -Pn 192.168.36.140-150>>>>>it will only do the port scan until how much we set the range 
+
+sudo netdiscover -r 192.168.36.0/24>>>host discovery
+
+target specification While doing a scan, it helps to specify a single target
+nmap 192.168.36.147 
+
+nmap -il /root/desktop/hostlist.txt
+> It is; we can save the IP address of the target in our kali, and we can use this command to check the ports and active hosts that are available in this IP address
+
+cd /usr/share/nmap/scripts  
+ls
+
+nmap -n -p80 -script http-enum 192.168.36.147
+nmap -n -p80 -script http-enum scanme.nmap.org 
+nmap -Pn -p80 -script http-enum scanme.nmap.org
+nmap -pn 445 --script smb-os-discovery 192.168.36.131
+smb gives the information of os
+nmap -n -p80 --script dns-brute cisco.com>>>>for finding the domains
+
+git for vulscan>>>>>https://github.com/scipag/vulscan
+copy the clone commnd 
+nmap sV --script=vulscan/vulscan 192.168.36.147
+ nmap -sV --script=vulscan/vulscan.se 192.168.36.147
+nmap --traceroute -script traceroute-geolocation. nse -p 8 lynx-infosec.com
+nmap -p80,443 -script http-waf-detect lynx-infosec.com
+It will help to detect whether the target system has a firewall or not
+
+nmap -f 192.168.36.1 -v  
+
+nmap -sS -D 10.10.10.11,10.10.10.12 192.168.36.141
+The command you provided appears to have a formatting issue (extra octets in the decoy IP addresses)
+
+Breakdown of the command:
+nmap → Runs the Nmap network scanner.
+
+-sS → Performs a Stealth Scan (SYN Scan), which sends SYN packets and waits for a response without completing the TCP handshake.
+
+-D 10.10.10.11,10.10.10.12 → Decoy Scan:
+
+This makes the scan appear as if it is coming from multiple sources (10.10.10.11 and 10.10.10.12) to obscure the attacker's identity.
+
+192.168.36.141 → The target IP address being scanned.
+
+Purpose of the command:
+It attempts a stealthy scan of 192.168.36.141, using decoy IPs to hide the true source of the scan. This can help it evade detection by security tools or intrusion detection systems (IDS).
+ -------------------------------------------------------------------------
+Is decoyip is constat?
+
+No, 10.10.10.11,10.10.10.12`** are **not constant decoy addresses**. You can use any IP addresses as decoys.  
+
+### How Decoys Work in Nmap:
+- Nmap allows you to **spoof multiple IP addresses** as decoys to make it harder for the target to identify the actual scanner.
+- The decoy IPs should ideally be **real, active hosts** on the network to avoid raising suspicion.
+
+### Choosing Decoy IPs:
+- Use real IP addresses from the network you are scanning.
+- Avoid using random private IPs unless they exist on the network.
+- You can specify **multiple decoys**, e.g.:
+  ```bash
+  nmap -sS -D RND,RND,RND 192.168.1.100
+  ```
+  - `RND` tells Nmap to **randomly select decoys**.
+
+### Example of Custom Decoys:
+```bash
+nmap -sS -D 192.168.1.10,192.168.1.20,192.168.1.30 192.168.1.100
+```
+- This scan appears as if it's coming from **192.168.1.10, 192.168.1.20, 192.168.1.30**, making it harder to trace back to the real attacker.
+
+So, **`10.10.10.11,10.10.10.12` are just example decoy IPs**, and you can change them based on your needs. 
+--------------------------------------------------------------------------
+
+nmap -sS --mtu 8 192.168.36.1
+
+mtu-->Maximum Transmission Unit (MTU) for packet fragmentation.
+
+The --mtu option breaks packets into smaller sizes to evade detection by Intrusion Detection Systems (IDS) and firewalls.
+
+B should be a multiple of 8 (e.g., 16, 32, 64, 128).
+
+(nmap -sS --mtu 32 192.168.36.1)
+This sends packets fragmented into 32-byte chunks, which may bypass some security filters.
+
+This splits packets into 32-byte fragments before sending.
+
+Some IDS/firewalls do not reassemble fragmented packets, making it harder to detect the scan.
+
+How This Works
+🔹 Without --mtu:
+[SRC] → [Firewall] 🚫 (Blocked)
+
+🔹 With --mtu (e.g., 32):
+[SRC] → [Firewall] 🛑(Fails to detect) → [TARGET] (Receives scan)
+
+The firewall might let the fragmented packets through since it does not recognize them as part of a scan.
+
+Bypassing Firewalls that filter standard scan packets.
+✔ Evading IDS detection by splitting packets into non-standard sizes.
+✔ Pentesting to check if a network is vulnerable to fragmentation-based evasion techniques.
+
+
+-----------
+nmap --script firewall-bypass 192.168.36.141  -->to bypass firewall using --script
+
+----
+Idle Scan (-sI) is an ultra-stealthy Nmap technique where you use an idle host (zombie) to scan another machine without revealing your own IP. It exploits how the IP ID field in TCP packets increments in certain OSes. (passive host)
+
+You send SYN/ACK packets to a zombie machine (passive host).
+
+The zombie’s IP ID field is checked before & after sending spoofed packets.
+
+If the target is open, the IP ID changes predictably.
+
+If the target is closed, the zombie does not increment its IP ID.
+
+ The target system never sees your real IP! 
+
+nmap -Pn -p 80 --script ipidseq 192.168.1.50
+(Replace 192.168.1.50 with the suspected zombie machine.)
+
+Output Example:
+
+“Incremental” →  Can be used as a zombie!
+
+“Random” or “Broken” →  Not usable as a zombie.
+
+
+What Can Be a Zombie IP?
+A zombie IP is a machine that is:  
+✔ Idle (not actively communicating)  
+✔ Has a predictable IP ID sequence  
+✔ Responds to probes but doesn’t detect the scan 
+
+---
+
+how to Find a Zombie Machine?
+ Step 1: Scan for Live Hosts in Your Network
+Run this on Kali to find potential machines:
+
+nmap -sn 192.168.1.0/24
+```
+(Replace `192.168.1.0/24` with your subnet.)  
+
+📌 This will list active IPs in your network.
+
+---
+ Step 2: Check for Predictable IP ID
+Once you have some active hosts, test them for **IP ID behavior:  
+```bash
+nmap -Pn -p 80 --script ipidseq 192.168.1.50
+```
+(Replace `192.168.1.50` with a host IP from Step 1.)
+
+---
+
+Step 3: Identify a Valid Zombie
+Check the Output:
+- If it says "Incremental" ✅ → This is a good zombie!  
+- If it says "Random" or "Broken"→ Cannot be used.  
+
+---
+
+ Common Zombie Machines
+🔹 Printers & IoT Devices(Often idle & predictable IP ID)  
+🔹 Old Windows Machines(Win XP, Server 2003, etc.)  
+🔹 Misconfigured Linux Servers  
+
+---/
+
+Example: Using a Zombie for Scanning
+Let’s say you found a valid zombie at 192.168.1.50, and your target is **192.168.1.100**.  
+nmap -sI 192.168.1.50 192.168.1.100
+
+Now, you are scanning stealthily,through the zombie machine!
+
+---
+
+Try It & Let Me Know!
+✔️ Scan your network  
+✔️ Find a zombie  
+✔️ Test the Idle Scan
+----
+nmap --proxies http://128.22.123.175:80 192.168.36.1
+it is also used to scan the open ports without revaling out ip
+
+-----
+Every computer has a total of 65535 available ports; however, many of these are registered as standard ports. For example, a HTTP Webservice can nearly always be found on port 80 of the server. A HTTPS Webservice can be found on port 443. Windows NETBIOS can be found on port 139 and SMB can be found on port 445.
+
+nmap-h | grep (something youwant to know about)
+When port scanning with Nmap, there are three basic scan types. These are:
+
+TCP Connect Scans (-sT)
+SYN "Half-open" Scans (-sS)
+UDP Scans (-sU)
+Additionally there are several less common port scan types, some of which we will also cover (albeit in less detail). These are:
+
+TCP Null Scans (-sN)
+TCP FIN Scans (-sF)
+TCP Xmas Scans (-sX)
+-----
+
+NULL, FIN and Xmas TCP port scans are less commonly used than any of the others we've covered already, so we will not go into a huge amount of depth here. All three are interlinked and are used primarily as they tend to be even stealthier, relatively speaking, than a SYN "stealth" scan. Beginning with NULL scans:
+
+As the name suggests, NULL scans (-sN) are when the TCP request is sent with no flags set at all. As per the RFC, the target host should respond with a RST if the port is closed.
+
+
+
+
+
+FIN scans (-sF) work in an almost identical fashion; however, instead of sending a completely empty packet, a request is sent with the FIN flag (usually used to gracefully close an active connection). Once again, Nmap expects a RST if the port is closed.
+
+
+
+
+
+As with the other two scans in this class, Xmas scans (-sX) send a malformed TCP packet and expects a RST response for closed ports. It's referred to as an xmas scan as the flags that it sets (PSH, URG and FIN) give it the appearance of a blinking christmas tree when viewed as a packet capture in Wireshark.
+
+
+
